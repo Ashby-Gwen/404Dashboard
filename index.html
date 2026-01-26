@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Business Intelligence Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-50 p-6 min-h-screen">
+
+<div class="max-w-7xl mx-auto border-2 border-black rounded-3xl p-4 bg-white shadow-xl flex gap-4 min-h-[800px]">
+
+  <!-- SIDEBAR -->
+  <aside class="w-1/4 border-2 border-black rounded-2xl p-6 flex flex-col gap-3">
+    <button onclick="showView('executive')" class="nav-btn active">Executive</button>
+    <button onclick="showView('sales')" class="nav-btn">Sales Performance</button>
+    <button onclick="showView('trends')" class="nav-btn">Trends Comparison</button>
+    <button onclick="showView('ingredients')" class="nav-btn">Ingredients Cost</button>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="flex-1 flex flex-col gap-4">
+
+    <!-- HEADER -->
+    <header class="border-2 border-black rounded-2xl p-4 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <div class="w-14 h-14 border-2 border-black rounded-full flex items-center justify-center font-bold">
+          P
+        </div>
+        <h1 id="pageTitle" class="text-xl font-bold italic">EXECUTIVE OVERVIEW</h1>
+      </div>
+
+      <div class="flex gap-3">
+        <button class="px-6 py-2 border-2 border-black rounded-xl hover:bg-blue-50">Data Entry</button>
+        <button class="px-6 py-2 border-2 border-black rounded-xl hover:bg-red-50">Alerts</button>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="flex-1 border-2 border-black rounded-2xl p-8 overflow-y-auto">
+
+      <!-- EXECUTIVE -->
+      <section id="executive" class="view">
+        <div class="grid grid-cols-3 gap-6 mb-8">
+          <div class="metric bg-green-50">
+            <p>Total Sales</p><h2>$42,500</h2>
+          </div>
+          <div class="metric bg-orange-50">
+            <p>Ingredient Costs</p><h2>$12,200</h2>
+          </div>
+          <div class="metric bg-blue-50">
+            <p>Net Profit</p><h2>$30,300</h2>
+          </div>
+        </div>
+        <div class="placeholder">[ Sales vs Profit Trend ]</div>
+      </section>
+
+      <!-- SALES -->
+      <section id="sales" class="view hidden">
+        <div class="placeholder">[ Sales Performance Charts ]</div>
+      </section>
+
+      <!-- TRENDS -->
+      <section id="trends" class="view hidden">
+        <div class="placeholder">[ Trend Comparison Charts ]</div>
+      </section>
+
+      <!-- INGREDIENTS -->
+      <section id="ingredients" class="view hidden">
+        <div class="placeholder">[ Ingredient Cost Breakdown ]</div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<!-- STYLES -->
+<style>
+  .nav-btn {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid black;
+    border-radius: 1rem;
+    font-weight: 600;
+    transition: background 0.2s;
+  }
+  .nav-btn:hover { background: #f3f4f6; }
+  .nav-btn.active { background: #e5e7eb; }
+
+  .metric {
+    padding: 1.5rem;
+    border: 2px solid black;
+    border-radius: 1rem;
+    font-weight: bold;
+  }
+  .metric h2 { font-size: 1.75rem; }
+
+  .placeholder {
+    width: 100%;
+    height: 16rem;
+    border: 2px dashed #9ca3af;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6b7280;
+  }
+</style>
+
+<!-- NAV LOGIC -->
+<script>
+  function showView(viewId) {
+    document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
+    document.getElementById(viewId).classList.remove('hidden');
+
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+
+    document.getElementById('pageTitle').innerText =
+      viewId.replace('-', ' ').toUpperCase();
+  }
+</script>
+
+</body>
+</html>
