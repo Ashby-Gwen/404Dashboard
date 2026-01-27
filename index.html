@@ -12,18 +12,62 @@
 <div class="max-w-7xl mx-auto border-2 border-black rounded-3xl p-4 bg-white shadow-xl flex gap-4 min-h-[800px]">
 
   <!-- SIDEBAR -->
-  <aside class="w-1/4 border-2 border-black rounded-2xl p-6 flex flex-col gap-3">
-    <button onclick="showView('executive')" class="nav-btn active">Executive</button>
-    <button onclick="showView('sales')" class="nav-btn">Sales Performance</button>
-    <button onclick="showView('trends')" class="nav-btn">Trends Comparison</button>
-    <button onclick="showView('ingredients')" class="nav-btn">Ingredients Cost</button>
+  <aside id="sidebar"
+  class="border-2 border-black rounded-2xl p-6 flex flex-col gap-3
+         md:w-1/4 w-full hidden md:flex">
+
+    <button onclick="showView('executive', this); toggleSidebar()" class="nav-btn">Executive</button>
+    <button onclick="showView('sales', this); toggleSidebar()" class="nav-btn">Sales Performance</button>
+    <button onclick="showView('trends', this); toggleSidebar()" class="nav-btn">Trends Comparison</button>
+    <button onclick="showView('ingredients', this); toggleSidebar()" class="nav-btn">Ingredients Cost</button>
   </aside>
 
   <!-- MAIN -->
-  <div class="flex-1 flex flex-col gap-4">
+  <div class="max-w-7xl mx-auto border-2 border-black rounded-3xl p-4 bg-white shadow-xl 
+            flex flex-col md:flex-row gap-4 min-h-[800px]">
+
 
     <!-- HEADER -->
-    <header class="border-2 border-black rounded-2xl p-4 flex items-center justify-between">
+    <header class="border-2 border-black rounded-2xl p-4 
+               flex flex-col sm:flex-row gap-4 
+               sm:items-center sm:justify-between">
+
+  <!-- LEFT SIDE: menu + profile + title -->
+  <div class="flex items-center gap-3">
+
+    <!-- MOBILE MENU BUTTON (PHONE ONLY) -->
+    <button
+      class="md:hidden px-3 py-2 border-2 border-black rounded-lg"
+      onclick="toggleSidebar()">
+      ☰
+    </button>
+
+    <!-- PROFILE -->
+    <div class="w-14 h-14 border-2 border-black rounded-full 
+                flex items-center justify-center font-bold">
+      P
+    </div>
+
+    <!-- PAGE TITLE -->
+    <h1 id="pageTitle" class="text-xl font-bold italic">
+      EXECUTIVE OVERVIEW
+    </h1>
+
+  </div>
+
+  <!-- RIGHT SIDE: ACTION BUTTONS -->
+  <div class="flex gap-3 flex-wrap">
+    <button class="px-6 py-2 border-2 border-black rounded-xl hover:bg-blue-50">
+      Data Entry
+    </button>
+    <button class="px-6 py-2 border-2 border-black rounded-xl hover:bg-red-50">
+      Alerts
+    </button>
+  </div>
+
+</header>
+
+
       <div class="flex items-center gap-4">
         <div class="w-14 h-14 border-2 border-black rounded-full flex items-center justify-center font-bold">
           P
@@ -38,11 +82,12 @@
     </header>
 
     <!-- CONTENT -->
-    <main class="flex-1 border-2 border-black rounded-2xl p-8 overflow-y-auto">
+    <main class="flex-1 border-2 border-black rounded-2xl p-4 sm:p-8 overflow-y-auto">
 
       <!-- EXECUTIVE -->
       <section id="executive" class="view">
-        <div class="grid grid-cols-3 gap-6 mb-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+
           <div class="metric bg-green-50">
             <p>Total Sales</p><h2>$42,500</h2>
           </div>
@@ -120,7 +165,14 @@
     document.getElementById('pageTitle').innerText =
       viewId.replace('-', ' ').toUpperCase();
   }
+
+  function toggleSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  sidebar.classList.toggle('hidden');
+}
+  
 </script>
 
 </body>
 </html>
+
