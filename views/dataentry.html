@@ -1,0 +1,22 @@
+<section class="flex flex-col gap-6 h-full">
+    <div class="flex">
+        <label class="cursor-pointer border-2 border-black rounded-full px-6 py-2 font-semibold hover:bg-gray-100 transition-colors">
+            Upload File (csv or excel only)
+            <input type="file" class="hidden" accept=".csv, .xlsx, .xls">
+        </label>
+    </div>
+
+    <div class="flex-1 border-2 border-black rounded-[2rem] flex items-center justify-center bg-white min-h-[300px]">
+        <span class="text-gray-500 font-medium text-lg">(Table Preview)</span>
+    </div>
+
+    <div class="flex flex-col sm:flex-row justify-between gap-4">
+        <button class="border-2 border-black rounded-2xl px-12 py-3 font-bold hover:bg-gray-100 transition-all active:scale-95">
+            Edit
+        </button>
+        
+        <button class="border-2 border-black rounded-2xl px-12 py-3 font-bold hover:bg-gray-100 transition-all active:scale-95">
+            Upload to Database
+        </button>
+    </div>
+</section>
