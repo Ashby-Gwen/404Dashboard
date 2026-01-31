@@ -1,48 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- META -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- TITLE -->
   <title>Business Intelligence Dashboard</title>
+
+  <!-- TAILWIND -->
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-gray-50 p-4 sm:p-6 min-h-screen">
 
-<div class="max-w-7xl mx-auto border-2 border-black rounded-3xl p-4 bg-white shadow-xl
-            flex flex-col md:flex-row gap-4 min-h-[800px]">
+<!-- APP CONTAINER -->
+<div class="max-w-7xl mx-auto bg-white border-2 border-black rounded-3xl shadow-xl
+            p-4 flex flex-col md:flex-row gap-4 min-h-[800px]">
 
   <!-- SIDEBAR -->
   <aside id="sidebar"
-    class="border-2 border-black rounded-2xl p-6 flex flex-col gap-3
-           md:w-1/4 w-full hidden md:flex">
+    class="md:w-1/4 w-full hidden md:flex
+           flex-col gap-3 p-6
+           border-2 border-black rounded-2xl">
 
-    <button onclick="showView('executive', this)" class="nav-btn active">
+    <button class="nav-btn active" onclick="showView('executive', this)">
       Executive
     </button>
-    <button onclick="showView('sales', this)" class="nav-btn">
+    <button class="nav-btn" onclick="showView('sales', this)">
       Sales Performance
     </button>
-    <button onclick="showView('trends', this)" class="nav-btn">
+    <button class="nav-btn" onclick="showView('trends', this)">
       Trends Comparison
     </button>
-    <button onclick="showView('ingredients', this)" class="nav-btn">
+    <button class="nav-btn" onclick="showView('ingredients', this)">
       Ingredients Cost
     </button>
   </aside>
 
-  <!-- MAIN -->
+  <!-- MAIN AREA -->
   <div class="flex-1 flex flex-col gap-4">
 
     <!-- HEADER -->
-    <header class="border-2 border-black rounded-2xl p-4
-                   flex flex-col sm:flex-row gap-4
-                   sm:items-center sm:justify-between">
+    <header
+      class="p-4 border-2 border-black rounded-2xl
+             flex flex-col sm:flex-row gap-4
+             sm:items-center sm:justify-between">
 
-      <!-- LEFT GROUP -->
+      <!-- HEADER LEFT -->
       <div class="flex items-center gap-3">
 
-        <!-- MOBILE MENU -->
+        <!-- MOBILE SIDEBAR TOGGLE -->
         <button
           class="md:hidden px-3 py-2 border-2 border-black rounded-lg"
           onclick="toggleSidebar()">
@@ -50,18 +58,19 @@
         </button>
 
         <!-- PROFILE -->
-        <div class="w-14 h-14 border-2 border-black rounded-full
-                    flex items-center justify-center font-bold">
+        <div
+          class="w-14 h-14 border-2 border-black rounded-full
+                 flex items-center justify-center font-bold">
           P
         </div>
 
-        <!-- TITLE -->
+        <!-- PAGE TITLE -->
         <h1 id="pageTitle" class="text-xl font-bold italic">
           EXECUTIVE OVERVIEW
         </h1>
       </div>
 
-      <!-- RIGHT ACTIONS -->
+      <!-- HEADER ACTIONS -->
       <div class="flex gap-3 flex-wrap">
         <button class="px-6 py-2 border-2 border-black rounded-xl hover:bg-blue-50">
           Data Entry
@@ -73,10 +82,11 @@
     </header>
 
     <!-- CONTENT -->
-    <main class="flex-1 border-2 border-black rounded-2xl
-                 p-4 sm:p-8 overflow-y-auto">
+    <main
+      class="flex-1 p-4 sm:p-8 overflow-y-auto
+             border-2 border-black rounded-2xl">
 
-      <!-- EXECUTIVE -->
+      <!-- EXECUTIVE VIEW -->
       <section id="executive" class="view">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           <div class="metric bg-green-50">
@@ -98,21 +108,21 @@
         </div>
       </section>
 
-      <!-- SALES -->
+      <!-- SALES VIEW -->
       <section id="sales" class="view hidden">
         <div class="placeholder">
           [ Sales Performance Charts ]
         </div>
       </section>
 
-      <!-- TRENDS -->
+      <!-- TRENDS VIEW -->
       <section id="trends" class="view hidden">
         <div class="placeholder">
           [ Trend Comparison Charts ]
         </div>
       </section>
 
-      <!-- INGREDIENTS -->
+      <!-- INGREDIENTS VIEW -->
       <section id="ingredients" class="view hidden">
         <div class="placeholder">
           [ Ingredient Cost Breakdown ]
@@ -123,7 +133,7 @@
   </div>
 </div>
 
-<!-- STYLES -->
+<!-- COMPONENT STYLES -->
 <style>
   .nav-btn {
     width: 100%;
@@ -133,9 +143,11 @@
     font-weight: 600;
     transition: background 0.2s;
   }
+
   .nav-btn:hover {
     background: #f3f4f6;
   }
+
   .nav-btn.active {
     background: #e5e7eb;
     outline: 2px solid black;
@@ -147,12 +159,12 @@
     border-radius: 1rem;
     font-weight: bold;
   }
+
   .metric h2 {
     font-size: 1.75rem;
   }
 
   .placeholder {
-    width: 100%;
     height: 16rem;
     border: 2px dashed #9ca3af;
     border-radius: 1rem;
@@ -166,15 +178,13 @@
 <!-- SCRIPTS -->
 <script>
   function toggleSidebar() {
-    const sidebar = document.getElementById('sidebar');
-    sidebar.classList.toggle('hidden');
+    document.getElementById('sidebar').classList.toggle('hidden');
   }
 
   function showView(viewId, button) {
     document.querySelectorAll('.view')
       .forEach(v => v.classList.add('hidden'));
-    document.getElementById(viewId)
-      .classList.remove('hidden');
+    document.getElementById(viewId).classList.remove('hidden');
 
     document.querySelectorAll('.nav-btn')
       .forEach(b => b.classList.remove('active'));
@@ -189,10 +199,7 @@
 
     document.getElementById('pageTitle').innerText = titles[viewId];
 
-    // auto-close sidebar on mobile
-    if (window.innerWidth < 768) {
-      toggleSidebar();
-    }
+    if (window.innerWidth < 768) toggleSidebar();
   }
 </script>
 
