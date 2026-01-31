@@ -1,31 +1,30 @@
-async function navigate(view) {
-  const container = document.getElementById('content');
-  const title = document.getElementById('pageTitle');
-  const file = `views/${view}.html`;
-
-  try {
-    const res = await fetch(file);
-    if (!res.ok) throw new Error('Not found');
-
-    container.innerHTML = await res.text();
-    title.innerText = formatTitle(view);
-
-  } catch {
-    const fallback = await fetch('views/filenotfound.html');
-    container.innerHTML = await fallback.text();
-    title.innerText = 'PAGE NOT FOUND';
-  }
+async function loadHTML(id, file) {
+  const el = document.getElementById(id);
+  const res = await fetch(file);
+  el.innerHTML = await res.text();
 }
 
-function formatTitle(view) {
-  const map = {
+async function showView(view) {
+  const titles = {
     executive: 'EXECUTIVE OVERVIEW',
     sales: 'SALES PERFORMANCE',
     trends: 'TRENDS COMPARISON',
     ingredients: 'INGREDIENT COSTS'
   };
-  return map[view] || 'PAGE NOT FOUND';
+
+  document.getElementById('pageTitle').innerText = titles[view];
+  await loadHTML('content', `views/${view}.html`);
+
+  if (window.innerWidth < 768) toggleSidebar();
 }
 
-// Load default page
-navigate('executive');
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('hidden');
+}
+
+/* Initial Load */
+(async () => {
+  await loadHTML('sidebar', 'components/sidebar.html');
+  await loadHTML('header', 'components/header.html');
+  await showView('executive');
+})();
