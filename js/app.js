@@ -1,24 +1,29 @@
-async function loadHTML(id, file) {
-  const el = document.getElementById(id);
+const CONTENT_ID = 'content';
+
+async function loadView(viewName) {
+  const container = document.getElementById(CONTENT_ID);
+  const viewPath = `views/${viewName}.html`;
 
   try {
-    const res = await fetch(file);
+    const response = await fetch(viewPath);
 
-    if (!res.ok) {
-      throw new Error(`Failed to load ${file}`);
+    if (!response.ok) {
+      throw new Error(`404: ${viewPath} not found`);
     }
 
-    el.innerHTML = await res.text();
-  } catch (error) {
-    console.error(error);
+    container.innerHTML = await response.text();
+  } catch (err) {
+    console.error(err);
+
+    // Fallback to file-not-found view
     const fallback = await fetch('views/filenotfound.html');
-    el.innerHTML = await fallback.text();
+    container.innerHTML = await fallback.text();
+
     document.getElementById('pageTitle').innerText = 'PAGE NOT FOUND';
   }
 }
 
-
-async function showView(view) {
+function showView(viewName, btn = null) {
   const titles = {
     executive: 'EXECUTIVE OVERVIEW',
     sales: 'SALES PERFORMANCE',
@@ -26,20 +31,22 @@ async function showView(view) {
     ingredients: 'INGREDIENT COSTS'
   };
 
-  document.getElementById('pageTitle').innerText = titles[view];
-  await loadHTML('content', `views/${view}.html`);
+  document.getElementById('pageTitle').innerText =
+    titles[viewName] || 'PAGE NOT FOUND';
 
+  // nav button state
+  document.querySelectorAll('.nav-btn')
+    .forEach(b => b.classList.remove('active'));
+
+  if (btn) btn.classList.add('active');
+
+  loadView(viewName);
+
+  // auto-close sidebar on mobile
   if (window.innerWidth < 768) toggleSidebar();
 }
 
 function toggleSidebar() {
-  document.getElementById('sidebar').classList.toggle('hidden');
+  document.getElementById('sidebar')
+    .classList.toggle('hidden');
 }
-
-/* Initial Load */
-(async () => {
-  await loadHTML('sidebar', 'components/sidebar.html');
-  await loadHTML('header', 'components/header.html');
-  await showView('executive');
-})();
-
