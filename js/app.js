@@ -1,7 +1,18 @@
-async function loadHTML(id, file) {
-  const el = document.getElementById(id);
-  const res = await fetch(file);
-  el.innerHTML = await res.text();
+async function loadHTML(id, url) {
+    try {
+        const response = await fetch(url);
+        
+        // Check if the file actually exists (status 200-299)
+        if (!response.ok) {
+            return false; 
+        }
+
+        const text = await response.text();
+        document.getElementById(id).innerHTML = text;
+        return true;
+    } catch (error) {
+        return false;
+    }
 }
 
 async function showView(view) {
@@ -28,3 +39,4 @@ function toggleSidebar() {
   await loadHTML('header', 'components/header.html');
   await showView('executive');
 })();
+
