@@ -24,7 +24,8 @@ async function showView(view) {
   };
 
   document.getElementById('pageTitle').innerText = titles[view];
-  await loadHTML('content', `views/${view}.html`);
+  (await loadHTML('content', `views/${view}.html`)) || 
+  (await loadHTML('content', 'views/filenotfound.html'));
 
   if (window.innerWidth < 768) toggleSidebar();
 }
@@ -39,4 +40,5 @@ function toggleSidebar() {
   await loadHTML('header', 'components/header.html');
   await showView('executive');
 })();
+
 
