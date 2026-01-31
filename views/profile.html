@@ -1,0 +1,34 @@
+<section class="flex flex-col gap-6">
+    <div class="flex items-center gap-4">
+        <div class="w-20 h-20 border-4 border-black rounded-full bg-gray-200 flex items-center justify-center text-2xl font-bold">
+            JD
+        </div>
+        <div>
+            <h2 class="text-3xl font-black italic uppercase">John Doe</h2>
+            <p class="font-bold text-gray-600 uppercase tracking-widest text-sm">Administrator</p>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="border-2 border-black rounded-3xl p-6 flex flex-col gap-4">
+            <h3 class="font-bold text-xl uppercase italic">Account Settings</h3>
+            <div class="flex flex-col gap-2">
+                <label class="font-bold text-xs uppercase">Email Address</label>
+                <input type="text" value="john.doe@business.com" class="border-2 border-black rounded-xl p-2 font-medium bg-gray-50" readonly>
+            </div>
+            <button class="nav-btn mt-2">Update Password</button>
+        </div>
+
+        <div class="border-2 border-black rounded-3xl p-6 flex flex-col gap-4">
+            <h3 class="font-bold text-xl uppercase italic">System Preferences</h3>
+            <div class="flex items-center justify-between">
+                <span class="font-bold uppercase text-sm">Dark Mode</span>
+                <div class="w-12 h-6 border-2 border-black rounded-full bg-gray-200"></div>
+            </div>
+            <div class="flex items-center justify-between">
+                <span class="font-bold uppercase text-sm">Email Alerts</span>
+                <div class="w-12 h-6 border-2 border-black rounded-full bg-black"></div>
+            </div>
+        </div>
+    </div>
+</section>
