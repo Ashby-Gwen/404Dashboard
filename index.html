@@ -38,9 +38,24 @@
   </div>
 </div>
 
+<div id="popup-container"></div>
+
 <script src="js/app.js"></script>
+<script src="js/floating.js"></script>
+
+<script>
+    // Load the popup HTML into the container on startup
+    window.addEventListener('load', async () => {
+        const resp = await fetch('views/popup.html');
+        document.getElementById('popup-container').innerHTML = await resp.text();
+        // Re-run init just in case it loaded after the DOM check
+        if (typeof initFloatingWindow === 'function') initFloatingWindow();
+    });
+</script>
+  
 </body>
 </html>
+
 
 
 
