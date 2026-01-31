@@ -40,5 +40,3 @@ function toggleSidebar() {
   await loadHTML('header', 'components/header.html');
   await showView('executive');
 })();
-
-
