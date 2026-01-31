@@ -34,9 +34,36 @@ function toggleSidebar() {
   document.getElementById('sidebar').classList.toggle('hidden');
 }
 
+function setupNavigation() {
+    // We look for the container holding the buttons
+    const navContainer = document.querySelector('.flex.gap-3.flex-wrap');
+
+    if (!navContainer) return;
+
+    navContainer.addEventListener('click', (event) => {
+        // Check if what was clicked is a button with our data attribute
+        const btn = event.target.closest('[data-view]');
+        
+        if (btn) {
+            const view = btn.getAttribute('data-view');
+            console.log(`Navigating to: ${view}`);
+            
+            // Call the function we built in the previous step
+            navigateTo(view);
+        }
+    });
+}
+
+// Call this once your components are loaded
+window.addEventListener('DOMContentLoaded', () => {
+    // ... your other loadHTML calls ...
+    setupNavigation();
+});
+
 /* Initial Load */
 (async () => {
   await loadHTML('sidebar', 'components/sidebar.html');
   await loadHTML('header', 'components/header.html');
   await showView('executive');
 })();
+
