@@ -17,8 +17,9 @@ async function showView(view) {
         sales: 'SALES PERFORMANCE',
         trends: 'TRENDS COMPARISON',
         ingredients: 'INGREDIENT COSTS',
-        alerts: 'ALERTS',
-        profile: 'PROFILE'
+        dataentry: 'DATA ENTRY & UPLOAD', // Added
+        profile: 'USER PROFILE SETTINGS',   // Added
+        alerts: 'SYSTEM ALERTS'
     };
 
     const titleEl = document.getElementById('pageTitle');
@@ -62,4 +63,5 @@ function setupNavigation() {
     // Initial view
     await showView('executive');
 })();
+
 
