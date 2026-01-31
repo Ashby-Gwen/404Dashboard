@@ -1,47 +1,31 @@
 async function navigate(view) {
   const container = document.getElementById('content');
+  const title = document.getElementById('pageTitle');
   const file = `views/${view}.html`;
 
   try {
     const res = await fetch(file);
-
-    if (!res.ok) throw new Error('View not found');
+    if (!res.ok) throw new Error('Not found');
 
     container.innerHTML = await res.text();
-    updateTitle(view);
-    setActive(view);
+    title.innerText = formatTitle(view);
 
   } catch {
     const fallback = await fetch('views/filenotfound.html');
     container.innerHTML = await fallback.text();
-    updateTitle('notfound');
-    clearActive();
+    title.innerText = 'PAGE NOT FOUND';
   }
 }
 
-function updateTitle(view) {
-  const titles = {
+function formatTitle(view) {
+  const map = {
     executive: 'EXECUTIVE OVERVIEW',
     sales: 'SALES PERFORMANCE',
     trends: 'TRENDS COMPARISON',
-    ingredients: 'INGREDIENT COSTS',
-    notfound: 'PAGE NOT FOUND'
+    ingredients: 'INGREDIENT COSTS'
   };
-
-  document.getElementById('pageTitle').innerText =
-    titles[view] || 'PAGE NOT FOUND';
+  return map[view] || 'PAGE NOT FOUND';
 }
 
-function setActive(view) {
-  document.querySelectorAll('.nav-btn').forEach(btn => {
-    btn.classList.toggle(
-      'active',
-      btn.textContent.toLowerCase().includes(view)
-    );
-  });
-}
-
-function clearActive() {
-  document.querySelectorAll('.nav-btn')
-    .forEach(btn => btn.classList.remove('active'));
-}
+// Load default page
+navigate('executive');
