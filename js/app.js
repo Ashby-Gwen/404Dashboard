@@ -1,52 +1,47 @@
-const CONTENT_ID = 'content';
-
-async function loadView(viewName) {
-  const container = document.getElementById(CONTENT_ID);
-  const viewPath = `views/${viewName}.html`;
+async function navigate(view) {
+  const container = document.getElementById('content');
+  const file = `views/${view}.html`;
 
   try {
-    const response = await fetch(viewPath);
+    const res = await fetch(file);
 
-    if (!response.ok) {
-      throw new Error(`404: ${viewPath} not found`);
-    }
+    if (!res.ok) throw new Error('View not found');
 
-    container.innerHTML = await response.text();
-  } catch (err) {
-    console.error(err);
+    container.innerHTML = await res.text();
+    updateTitle(view);
+    setActive(view);
 
-    // Fallback to file-not-found view
+  } catch {
     const fallback = await fetch('views/filenotfound.html');
     container.innerHTML = await fallback.text();
-
-    document.getElementById('pageTitle').innerText = 'PAGE NOT FOUND';
+    updateTitle('notfound');
+    clearActive();
   }
 }
 
-function showView(viewName, btn = null) {
+function updateTitle(view) {
   const titles = {
     executive: 'EXECUTIVE OVERVIEW',
     sales: 'SALES PERFORMANCE',
     trends: 'TRENDS COMPARISON',
-    ingredients: 'INGREDIENT COSTS'
+    ingredients: 'INGREDIENT COSTS',
+    notfound: 'PAGE NOT FOUND'
   };
 
   document.getElementById('pageTitle').innerText =
-    titles[viewName] || 'PAGE NOT FOUND';
-
-  // nav button state
-  document.querySelectorAll('.nav-btn')
-    .forEach(b => b.classList.remove('active'));
-
-  if (btn) btn.classList.add('active');
-
-  loadView(viewName);
-
-  // auto-close sidebar on mobile
-  if (window.innerWidth < 768) toggleSidebar();
+    titles[view] || 'PAGE NOT FOUND';
 }
 
-function toggleSidebar() {
-  document.getElementById('sidebar')
-    .classList.toggle('hidden');
+function setActive(view) {
+  document.querySelectorAll('.nav-btn').forEach(btn => {
+    btn.classList.toggle(
+      'active',
+      btn.textContent.toLowerCase().includes(view)
+    );
+  });
+}
+
+function clearActive() {
+  document.querySelectorAll('.nav-btn')
+    .forEach(btn => btn.classList.remove('active'));
 }
