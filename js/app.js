@@ -16,7 +16,9 @@ async function showView(view) {
         executive: 'EXECUTIVE OVERVIEW',
         sales: 'SALES PERFORMANCE',
         trends: 'TRENDS COMPARISON',
-        ingredients: 'INGREDIENT COSTS'
+        ingredients: 'INGREDIENT COSTS',
+        alerts: 'ALERTS',
+        profile: 'PROFILE'
     };
 
     const titleEl = document.getElementById('pageTitle');
@@ -60,3 +62,4 @@ function setupNavigation() {
     // Initial view
     await showView('executive');
 })();
+
