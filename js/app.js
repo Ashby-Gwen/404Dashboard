@@ -1,8 +1,22 @@
 async function loadHTML(id, file) {
   const el = document.getElementById(id);
-  const res = await fetch(file);
-  el.innerHTML = await res.text();
+
+  try {
+    const res = await fetch(file);
+
+    if (!res.ok) {
+      throw new Error(`Failed to load ${file}`);
+    }
+
+    el.innerHTML = await res.text();
+  } catch (error) {
+    console.error(error);
+    const fallback = await fetch('views/filenotfound.html');
+    el.innerHTML = await fallback.text();
+    document.getElementById('pageTitle').innerText = 'PAGE NOT FOUND';
+  }
 }
+
 
 async function showView(view) {
   const titles = {
@@ -28,3 +42,4 @@ function toggleSidebar() {
   await loadHTML('header', 'components/header.html');
   await showView('executive');
 })();
+
