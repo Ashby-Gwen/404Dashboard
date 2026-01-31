@@ -1,207 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- META -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- TITLE -->
   <title>Business Intelligence Dashboard</title>
-
-  <!-- TAILWIND -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body class="bg-gray-50 p-4 sm:p-6 min-h-screen">
 
-<!-- APP CONTAINER -->
-<div class="max-w-7xl mx-auto bg-white border-2 border-black rounded-3xl shadow-xl
-            p-4 flex flex-col md:flex-row gap-4 min-h-[800px]">
+<div class="max-w-7xl mx-auto border-2 border-black rounded-3xl p-4 bg-white shadow-xl
+            flex flex-col md:flex-row gap-4 min-h-[800px]">
 
   <!-- SIDEBAR -->
   <aside id="sidebar"
-    class="md:w-1/4 w-full hidden md:flex
-           flex-col gap-3 p-6
-           border-2 border-black rounded-2xl">
-
-    <button class="nav-btn active" onclick="showView('executive', this)">
-      Executive
-    </button>
-    <button class="nav-btn" onclick="showView('sales', this)">
-      Sales Performance
-    </button>
-    <button class="nav-btn" onclick="showView('trends', this)">
-      Trends Comparison
-    </button>
-    <button class="nav-btn" onclick="showView('ingredients', this)">
-      Ingredients Cost
-    </button>
+    class="border-2 border-black rounded-2xl p-6 flex flex-col gap-3
+           md:w-1/4 w-full hidden md:flex">
   </aside>
 
-  <!-- MAIN AREA -->
+  <!-- MAIN -->
   <div class="flex-1 flex flex-col gap-4">
 
     <!-- HEADER -->
-    <header
-      class="p-4 border-2 border-black rounded-2xl
+    <header id="header"
+      class="border-2 border-black rounded-2xl p-4
              flex flex-col sm:flex-row gap-4
              sm:items-center sm:justify-between">
-
-      <!-- HEADER LEFT -->
-      <div class="flex items-center gap-3">
-
-        <!-- MOBILE SIDEBAR TOGGLE -->
-        <button
-          class="md:hidden px-3 py-2 border-2 border-black rounded-lg"
-          onclick="toggleSidebar()">
-          ☰
-        </button>
-
-        <!-- PROFILE -->
-        <div
-          class="w-14 h-14 border-2 border-black rounded-full
-                 flex items-center justify-center font-bold">
-          P
-        </div>
-
-        <!-- PAGE TITLE -->
-        <h1 id="pageTitle" class="text-xl font-bold italic">
-          EXECUTIVE OVERVIEW
-        </h1>
-      </div>
-
-      <!-- HEADER ACTIONS -->
-      <div class="flex gap-3 flex-wrap">
-        <button class="px-6 py-2 border-2 border-black rounded-xl hover:bg-blue-50">
-          Data Entry
-        </button>
-        <button class="px-6 py-2 border-2 border-black rounded-xl hover:bg-red-50">
-          Alerts
-        </button>
-      </div>
     </header>
 
     <!-- CONTENT -->
-    <main
-      class="flex-1 p-4 sm:p-8 overflow-y-auto
-             border-2 border-black rounded-2xl">
-
-      <!-- EXECUTIVE VIEW -->
-      <section id="executive" class="view">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          <div class="metric bg-green-50">
-            <p>Total Sales</p>
-            <h2>$42,500</h2>
-          </div>
-          <div class="metric bg-orange-50">
-            <p>Ingredient Costs</p>
-            <h2>$12,200</h2>
-          </div>
-          <div class="metric bg-blue-50">
-            <p>Net Profit</p>
-            <h2>$30,300</h2>
-          </div>
-        </div>
-
-        <div class="placeholder">
-          [ Sales vs Profit Trend Chart ]
-        </div>
-      </section>
-
-      <!-- SALES VIEW -->
-      <section id="sales" class="view hidden">
-        <div class="placeholder">
-          [ Sales Performance Charts ]
-        </div>
-      </section>
-
-      <!-- TRENDS VIEW -->
-      <section id="trends" class="view hidden">
-        <div class="placeholder">
-          [ Trend Comparison Charts ]
-        </div>
-      </section>
-
-      <!-- INGREDIENTS VIEW -->
-      <section id="ingredients" class="view hidden">
-        <div class="placeholder">
-          [ Ingredient Cost Breakdown ]
-        </div>
-      </section>
-
+    <main id="content"
+      class="flex-1 border-2 border-black rounded-2xl
+             p-4 sm:p-8 overflow-y-auto">
     </main>
+
   </div>
 </div>
 
-<!-- COMPONENT STYLES -->
-<style>
-  .nav-btn {
-    width: 100%;
-    padding: 1rem;
-    border: 2px solid black;
-    border-radius: 1rem;
-    font-weight: 600;
-    transition: background 0.2s;
-  }
-
-  .nav-btn:hover {
-    background: #f3f4f6;
-  }
-
-  .nav-btn.active {
-    background: #e5e7eb;
-    outline: 2px solid black;
-  }
-
-  .metric {
-    padding: 1.5rem;
-    border: 2px solid black;
-    border-radius: 1rem;
-    font-weight: bold;
-  }
-
-  .metric h2 {
-    font-size: 1.75rem;
-  }
-
-  .placeholder {
-    height: 16rem;
-    border: 2px dashed #9ca3af;
-    border-radius: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #6b7280;
-  }
-</style>
-
-<!-- SCRIPTS -->
-<script>
-  function toggleSidebar() {
-    document.getElementById('sidebar').classList.toggle('hidden');
-  }
-
-  function showView(viewId, button) {
-    document.querySelectorAll('.view')
-      .forEach(v => v.classList.add('hidden'));
-    document.getElementById(viewId).classList.remove('hidden');
-
-    document.querySelectorAll('.nav-btn')
-      .forEach(b => b.classList.remove('active'));
-    button.classList.add('active');
-
-    const titles = {
-      executive: 'EXECUTIVE OVERVIEW',
-      sales: 'SALES PERFORMANCE',
-      trends: 'TRENDS COMPARISON',
-      ingredients: 'INGREDIENT COSTS'
-    };
-
-    document.getElementById('pageTitle').innerText = titles[viewId];
-
-    if (window.innerWidth < 768) toggleSidebar();
-  }
-</script>
-
+<script src="js/app.js"></script>
 </body>
 </html>
