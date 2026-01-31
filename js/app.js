@@ -1,14 +1,10 @@
 async function loadHTML(id, url) {
     try {
         const response = await fetch(url);
-        
-        // Check if the file actually exists (status 200-299)
-        if (!response.ok) {
-            return false; 
-        }
-
+        if (!response.ok) return false; 
         const text = await response.text();
-        document.getElementById(id).innerHTML = text;
+        const container = document.getElementById(id);
+        if (container) container.innerHTML = text;
         return true;
     } catch (error) {
         return false;
@@ -16,54 +12,51 @@ async function loadHTML(id, url) {
 }
 
 async function showView(view) {
-  const titles = {
-    executive: 'EXECUTIVE OVERVIEW',
-    sales: 'SALES PERFORMANCE',
-    trends: 'TRENDS COMPARISON',
-    ingredients: 'INGREDIENT COSTS'
-  };
+    const titles = {
+        executive: 'EXECUTIVE OVERVIEW',
+        sales: 'SALES PERFORMANCE',
+        trends: 'TRENDS COMPARISON',
+        ingredients: 'INGREDIENT COSTS'
+    };
 
-  document.getElementById('pageTitle').innerText = titles[view];
-  (await loadHTML('content', `views/${view}.html`)) || 
-  (await loadHTML('content', 'views/filenotfound.html'));
+    const titleEl = document.getElementById('pageTitle');
+    if (titleEl) titleEl.innerText = titles[view] || 'PAGE NOT FOUND';
 
-  if (window.innerWidth < 768) toggleSidebar();
+    // Try loading the view, fallback to 404 if it fails
+    const success = await loadHTML('content', `views/${view}.html`);
+    if (!success) {
+        await loadHTML('content', 'views/filenotfound.html');
+    }
+
+    if (window.innerWidth < 768) toggleSidebar();
 }
 
 function toggleSidebar() {
-  document.getElementById('sidebar').classList.toggle('hidden');
+    const sb = document.getElementById('sidebar');
+    if (sb) sb.classList.toggle('hidden');
 }
 
 function setupNavigation() {
-    // We look for the container holding the buttons
-    const navContainer = document.querySelector('.flex.gap-3.flex-wrap');
-
-    if (!navContainer) return;
-
-    navContainer.addEventListener('click', (event) => {
-        // Check if what was clicked is a button with our data attribute
+    // Listen for clicks on the document and delegate
+    // This works even if buttons are inside loaded components
+    document.addEventListener('click', (event) => {
         const btn = event.target.closest('[data-view]');
-        
         if (btn) {
             const view = btn.getAttribute('data-view');
-            console.log(`Navigating to: ${view}`);
-            
-            // Call the function we built in the previous step
-            navigateTo(view);
+            showView(view); // Fixed function name
         }
     });
 }
 
-// Call this once your components are loaded
-window.addEventListener('DOMContentLoaded', () => {
-    // ... your other loadHTML calls ...
-    setupNavigation();
-});
-
 /* Initial Load */
 (async () => {
-  await loadHTML('sidebar', 'components/sidebar.html');
-  await loadHTML('header', 'components/header.html');
-  await showView('executive');
+    // Load structure first
+    await loadHTML('sidebar', 'components/sidebar.html');
+    await loadHTML('header', 'components/header.html');
+    
+    // Setup listeners after HTML is injected
+    setupNavigation();
+    
+    // Initial view
+    await showView('executive');
 })();
-
