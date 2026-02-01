@@ -1,12 +1,14 @@
 async function loadHTML(id, url) {
     try {
         const response = await fetch(url);
-        if (!response.ok) return false; 
+        if (!response.ok) return false;
+
         const text = await response.text();
         const container = document.getElementById(id);
         if (container) container.innerHTML = text;
+
         return true;
-    } catch (error) {
+    } catch {
         return false;
     }
 }
@@ -17,20 +19,30 @@ async function showView(view) {
         sales: 'SALES PERFORMANCE',
         trends: 'TRENDS COMPARISON',
         ingredients: 'INGREDIENT COSTS',
-        dataentry: 'DATA ENTRY & UPLOAD', // Added
-        profile: 'USER PROFILE SETTINGS',   // Added
-        alerts: 'SYSTEM ALERTS'
+        dataentry: 'DATA ENTRY & UPLOAD',
+        profile: 'USER PROFILE SETTINGS',
+        alerts: 'SYSTEM ALERTS',
+
+        // 🔹 ANALYTICS VIEWS
+        'sales-analytics': 'SALES ANALYTICS',
+        'trends-analytics': 'TRENDS ANALYTICS',
+        'ingredients-analytics': 'INGREDIENT ANALYTICS'
     };
 
     const titleEl = document.getElementById('pageTitle');
-    if (titleEl) titleEl.innerText = titles[view] || 'PAGE NOT FOUND';
+    if (titleEl) {
+        titleEl.innerText = titles[view] || 'PAGE NOT FOUND';
+    }
 
-    // Try loading the view, fallback to 404 if it fails
+    // Attempt to load the requested view
     const success = await loadHTML('content', `views/${view}.html`);
+
+    // Fallback to 404 view if missing
     if (!success) {
         await loadHTML('content', 'views/filenotfound.html');
     }
 
+    // Auto-close sidebar on mobile
     if (window.innerWidth < 768) toggleSidebar();
 }
 
@@ -40,28 +52,22 @@ function toggleSidebar() {
 }
 
 function setupNavigation() {
-    // Listen for clicks on the document and delegate
-    // This works even if buttons are inside loaded components
+    // Delegated navigation: works for dynamically loaded content
     document.addEventListener('click', (event) => {
         const btn = event.target.closest('[data-view]');
-        if (btn) {
-            const view = btn.getAttribute('data-view');
-            showView(view); // Fixed function name
-        }
+        if (!btn) return;
+
+        const view = btn.getAttribute('data-view');
+        showView(view);
     });
 }
 
 /* Initial Load */
 (async () => {
-    // Load structure first
     await loadHTML('sidebar', 'components/sidebar.html');
     await loadHTML('header', 'components/header.html');
-    
-    // Setup listeners after HTML is injected
+
     setupNavigation();
-    
-    // Initial view
+
     await showView('executive');
 })();
-
-
