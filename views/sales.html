@@ -1,72 +1,44 @@
 <!-- Sales Performance View -->
 
-<section style="display:flex; flex-direction:column; gap:24px;">
+<section class="space-y-6">
 
   <!-- TOP ROW -->
-  <div style="
-    display:grid;
-    grid-template-columns:repeat(3, 1fr);
-    gap:24px;
-  ">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-    <div style="
-      padding:32px;
-      border:2px solid black;
-      border-radius:20px;
-      font-weight:500;
-      text-align:center;
-    ">
+    <!-- MOST SOLD ITEM -->
+    <div class="p-6 border-2 border-black rounded-2xl flex items-center justify-center text-center font-medium">
       Menu Item with Most Sales
     </div>
 
-    <div style="
-      padding:32px;
-      border:2px solid black;
-      border-radius:20px;
-      font-weight:500;
-      text-align:center;
-    ">
+    <!-- MOST PROFITABLE ITEM -->
+    <div class="p-6 border-2 border-black rounded-2xl flex items-center justify-center text-center font-medium">
       Most Profitable Menu Item
     </div>
 
-    <!-- REUSABLE VIEW ANALYTICS BUTTON -->
-    <div style="
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    ">
+    <!-- VIEW ANALYTICS CTA -->
+    <div class="p-6 border-2 border-black rounded-2xl flex items-center justify-center">
       <button
-        class="view-analytics-btn"
-        data-view="sales"
-        style="
-          padding:24px 28px;
-          border:2px solid black;
-          border-radius:20px;
-          font-weight:600;
-          background:white;
-          cursor:pointer;
-        ">
+        class="w-full h-full border-2 border-black rounded-xl font-semibold hover:bg-gray-100 transition"
+        data-view="sales-analytics">
         View Analytics
       </button>
     </div>
 
   </div>
 
-  <!-- BOTTOM ROW -->
-  <div style="
-    display:grid;
-    grid-template-columns:repeat(2, 1fr);
-    gap:24px;
-  ">
-    <div style="
-      padding:32px;
-      border:2px solid black;
-      border-radius:20px;
-      font-weight:500;
-      text-align:center;
-    ">
-      Trend Of Most Profitable and Most Sold Item
+  <!-- SECOND ROW -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+    <!-- TREND PLACEHOLDER -->
+    <div class="p-8 border-2 border-black rounded-2xl flex items-center justify-center text-center font-medium h-48">
+      Trend of Most Profitable and Most Sold Item
     </div>
+
+    <!-- OPTIONAL FUTURE PANEL -->
+    <div class="p-8 border-2 border-dashed border-gray-400 rounded-2xl flex items-center justify-center text-gray-400 h-48">
+      [ Reserved for Additional Sales Insight ]
+    </div>
+
   </div>
 
 </section>
